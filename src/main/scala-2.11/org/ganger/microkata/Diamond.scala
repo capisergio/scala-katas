@@ -1,31 +1,19 @@
 package org.ganger.microkata
 
-/**
- * Created by arincon on 13/10/15.
- */
-object Diamond {
+case class Diamond(char: Char) {
 
-  final val initChar: Char = 'A'
+  val init = 'A'
+  val range = (init to char)
+  val size = range.size
 
-  def build(finalChar: Char): Seq[String] = {
-    val totalSize = finalChar - initChar + 1
-    addReverse(for (currentChar <- initChar to finalChar)
-      yield makeLineFor(currentChar, totalSize))
+  def build: Seq[String] = buildMirror(for (currentChar <- range) yield buildLine(currentChar))
+
+  def buildLine(currentChar: Char): String = {
+    val start = for (x <- 0 to size - 1)
+      yield if (x == range.reverse.indexOf(currentChar)) currentChar
+      else "-"
+    (start ++ start.reverse.tail).mkString("")
   }
 
-  def makeLineFor(currentChar: Char, totalSize: Int) = {
-    val place = totalSize - (currentChar - initChar + 1)
-    val start = (
-      for (x <- 0 to totalSize - 1)
-        yield {
-          if (x == place) currentChar.toString
-          else "-"
-        }).mkString("")
-    val end = start.reverse.drop(1)
-    (start ++ end).mkString("")
-  }
-
-  def addReverse(strings: Seq[String]): Seq[String] =
-    strings ++ strings.reverse.drop(1)
-
+  def buildMirror(chars: Seq[String]): Seq[String] = chars ++ chars.reverse.tail
 }

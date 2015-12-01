@@ -4,9 +4,9 @@ version := "1.0"
 
 scalaVersion := "2.11.7"
 
-scalaSource in Compile := file("src/main/scala-2.11")
+scalaSource in Compile := baseDirectory.value / "src/main/scala-2.11"
 
-scalaSource in Test := file("src/test/scala-2.11")
+scalaSource in Test := baseDirectory.value / "src/test/scala-2.11"
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
